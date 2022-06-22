@@ -9,26 +9,30 @@ use clap::{Parser, Subcommand};
 #[clap(author, version, about, long_about = None)]
 struct UT {
     #[clap(subcommand)]
-    commands: Command
+    commands: Option<Command>
 }
 
 #[derive(Subcommand)]
 enum Command {
-    // Generate a typescript project
+    /// Generates a typescript project
     Ts {},
 }
 
 fn main() {
     let args = UT::parse();
     match args.commands {
-        Command::Ts {} => {
+        Some(Command::Ts {}) => {
             let ts = Ts::new();
             match ts.build() {
                 Ok(_) => {},
-                Err(_) => {
-                    println!("Error");
+                Err(e) => {
+                    println!("There was an error creating ts project: {:?}. Report to a developer. Exiting", e);
+                    std::process::exit(0);
                 }
             };
+        }
+        None {} => {
+            std::process::Command::new(env!("CARGO_BIN_NAME")).arg("-h").spawn().unwrap();
         }
     }
 }
