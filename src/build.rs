@@ -5,7 +5,6 @@ pub trait ProjectBuilder {
 }
 impl ProjectBuilder for Ts {
     fn build(self) -> Result<(), ()> {
-        
         Ok(())
     }
 }

@@ -17,6 +17,4 @@ impl Ts {
             files: vec!["deps.ts".to_string()],
         }
     }
-
 }
-
