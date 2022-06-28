@@ -14,7 +14,8 @@ impl ProjectBuilder for Ts {
         for i in self.directories {
             std::fs::create_dir(i).unwrap();
         }
-
+        // std::process::Command::new("npm.cmd").spawn().unwrap(); 
+        // note: npm is not an executable, replicate script to spawn npm
         Ok(())
     }
     

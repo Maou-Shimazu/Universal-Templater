@@ -1,19 +1,34 @@
-#![allow(dead_code)]
 pub struct Ts {
     pub name: String,
-    pub cli: bool, // if cli, main.ts
-    pub web: bool, // if web, index.ts
     pub files: Vec<String>,
     pub directories: Vec<String>,
 }
 
 // note: add deno flag and npm flag, add a makefile along with it
 impl Ts {
-    pub fn configure(name: String, cli: bool, web: bool, files: Vec<String>, directories: Vec<String>) -> Ts {
-        Ts { name, cli, web, files, directories }
+    pub fn new(name: String) -> Ts {
+        Ts {
+            name,
+            files: vec![],
+            directories: vec!["ts".to_string()],
+        }
     }
 
-    pub fn command(self, deno: bool, npm: bool) -> Ts {
+    pub fn command(mut self, deno: bool, npm: bool) -> Ts {
+        if deno {
+            self.files = vec![
+                "deps.ts".to_string(),
+                "main.ts".to_string(),
+                "makefile".to_string(),
+            ];
+            // makefile
+        } else {
+            self.files = vec![
+                "index.ts".to_string(),
+                "deps.ts".to_string(),
+                "tsconfig.json".to_string(),
+            ];   
+        }
         return self;
     }
 }
